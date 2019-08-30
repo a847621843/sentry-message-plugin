@@ -5,8 +5,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name="sentry-message-plugin 1.1",
-    version='1.1',
+    name="sentry-message-plugin",
+    version='1.2',
     author='zhen.huang',
     author_email='huangzhen@xinchanedu.com',
     url='https://github.com/a847621843/sentry-message-plugin',

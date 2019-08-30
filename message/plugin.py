@@ -71,6 +71,7 @@ class MessagePlugin(NotificationPlugin):
         message = {
             "type":"sentry",
             "sentry":{
+                "type":"markdown",
                 "projectName":project.slug,
                 "level":event.get_tag('level').capitalize(),
                 "time":datetime.now(timezone('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S"),
@@ -79,9 +80,12 @@ class MessagePlugin(NotificationPlugin):
             }
 
         }
-
+        headers = {
+            "token":access_token,
+            'Content-Type': 'application/json'
+        }
         return requests.post(
             baseUrl+messageUrl,
-            params={"token": access_token},
+            headers=headers,
             data=json.dumps(message),
         )
