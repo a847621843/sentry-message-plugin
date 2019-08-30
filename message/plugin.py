@@ -25,7 +25,7 @@ class MessagePlugin(NotificationPlugin):
     title = 'message'
     slug = 'message'
     description = u'Sentry报警插件'
-    version = pkg_resources.get_distribution("sentry_wechat_plugin").version
+    version = pkg_resources.get_distribution("sentry_message_plugin").version
     author = 'zhen.huang'
     author_url = 'https://github.com/a847621843'
     resource_links = [
