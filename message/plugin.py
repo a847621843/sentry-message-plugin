@@ -60,14 +60,14 @@ class MessagePlugin(NotificationPlugin):
         tokenUrl = self.get_option("tokenUrl", project)
         phone = self.get_option("phone", project)
         host = self.get_option("host", project) or ''
+        return project
+        # access_token = requests.get(
+        #     baseUrl+tokenUrl,
+        #     params={"phone": phone}
+        # ).json().get("access_token")
+        # if not access_token:
+        #     return u'请检查baseUrl、tokenUrl、phone是否设置正确'
 
-        access_token = requests.get(
-            baseUrl+tokenUrl,
-            params={"phone": phone}
-        ).json().get("access_token")
-        if not access_token:
-            return u'请检查baseUrl、tokenUrl、phone是否设置正确'
-        return access_token
         # message = {
         #     "type":"sentry",
         #     "sentry":{
