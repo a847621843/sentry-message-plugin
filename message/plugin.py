@@ -67,25 +67,25 @@ class MessagePlugin(NotificationPlugin):
         ).json().get("access_token")
         if not access_token:
             return u'请检查baseUrl、tokenUrl、phone是否设置正确'
-
-        message = {
-            "type":"sentry",
-            "sentry":{
-                "type":"markdown",
-                "projectName":project.slug,
-                "level":event.get_tag('level').capitalize(),
-                "time":datetime.now(timezone('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S"),
-                "message":event.message.encode('utf8'),
-                "href":"{}{}events/{}/".format(host, group.get_absolute_url(), event.id)
-            }
-
-        }
-        headers = {
-            "token":access_token,
-            'Content-Type': 'application/json'
-        }
-        return requests.post(
-            baseUrl+messageUrl,
-            headers=headers,
-            data=json.dumps(message),
-        )
+        return access_token
+        # message = {
+        #     "type":"sentry",
+        #     "sentry":{
+        #         "type":"markdown",
+        #         "projectName":project.slug,
+        #         "level":event.get_tag('level').capitalize(),
+        #         "time":datetime.now(timezone('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S"),
+        #         "message":event.message.encode('utf8'),
+        #         "href":"{}{}events/{}/".format(host, group.get_absolute_url(), event.id)
+        #     }
+        #
+        # }
+        # headers = {
+        #     "token":access_token,
+        #     'Content-Type': 'application/json'
+        # }
+        # return requests.post(
+        #     baseUrl+messageUrl,
+        #     headers=headers,
+        #     data=json.dumps(message),
+        # )
