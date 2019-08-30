@@ -60,32 +60,30 @@ class MessagePlugin(NotificationPlugin):
         tokenUrl = self.get_option("tokenUrl", project)
         phone = self.get_option("phone", project)
         host = self.get_option("host", project) or ''
-        return project
-        # access_token = requests.get(
-        #     baseUrl+tokenUrl,
-        #     params={"phone": phone}
-        # ).json().get("access_token")
-        # if not access_token:
-        #     return u'请检查baseUrl、tokenUrl、phone是否设置正确'
+        access_token = requests.get(
+            baseUrl+tokenUrl,
+            params={"phone": phone}
+        ).json().get("access_token")
+        if not access_token:
+            return u'请检查baseUrl、tokenUrl、phone是否设置正确'
 
-        # message = {
-        #     "type":"sentry",
-        #     "sentry":{
-        #         "type":"markdown",
-        #         "projectName":project.slug,
-        #         "level":event.get_tag('level').capitalize(),
-        #         "time":datetime.now(timezone('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S"),
-        #         "message":event.message.encode('utf8'),
-        #         "href":"{}{}events/{}/".format(host, group.get_absolute_url(), event.id)
-        #     }
-        #
-        # }
-        # headers = {
-        #     "token":access_token,
-        #     'Content-Type': 'application/json'
-        # }
-        # return requests.post(
-        #     baseUrl+messageUrl,
-        #     headers=headers,
-        #     data=json.dumps(message),
-        # )
+        message = {
+            "type":"sentry",
+            "sentry":{
+                "type":"markdown",
+                "projectName":project.slug,
+                "level":event.get_tag('level').capitalize(),
+                "time":datetime.now(timezone('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S"),
+                "message":event.message.encode('utf8'),
+                "href":"{}{}events/{}/".format(host, group.get_absolute_url(), event.id)
+            }
+
+        }
+        headers = {
+            "token":access_token,
+        }
+        return requests.post(
+            baseUrl+messageUrl,
+            headers=headers,
+            data=json.dumps(message),
+        )
