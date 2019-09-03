@@ -69,8 +69,8 @@ class MessagePlugin(NotificationPlugin):
             return u'请检查baseUrl、keyUrl是否设置正确'
         access_token = requests.get(
             baseUrl+tokenUrl,
-            verify=False,
-            params={"key": key}
+            params={"key": key},
+            verify=False
         ).json().get("access_token")
         if not access_token:
             return u'请检查baseUrl、tokenUrl是否设置正确'
@@ -94,5 +94,5 @@ class MessagePlugin(NotificationPlugin):
             baseUrl+messageUrl,
             headers=headers,
             data=json.dumps(message),
-            verify=False,
+            verify=False
         )
