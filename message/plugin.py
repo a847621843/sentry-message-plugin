@@ -13,7 +13,7 @@ class MessageForm(forms.Form):
     baseUrl = forms.CharField(help_text=u"域名")
     messageUrl = forms.CharField(help_text=u"消息推送路由")
     tokenUrl = forms.CharField(help_text=u"token获取路由")
-    phone = forms.CharField(help_text=u"手机号，用于获取token")
+    keyUrl = forms.CharField(help_text=u"key获取路由")
     host = forms.CharField(
         help_text=u"Sentry访问的Host(填真实访问的地址，生产一般由Nginx、Apache进行反代，用于发送消息时点击href直接跳转到event页面)，如：http://127.0.0.1:9000",
         required=False,
@@ -48,6 +48,7 @@ class MessagePlugin(NotificationPlugin):
         return bool(self.get_option('messageUrl', project) and
                     self.get_option('baseUrl', project) and
                     self.get_option('tokenUrl', project) and
+                    self.get_option('keyUrl', project) and
                     self.get_option('phone', project))
 
     def notify_users(self, group, event, *args, **kwargs):
@@ -58,14 +59,20 @@ class MessagePlugin(NotificationPlugin):
         baseUrl = self.get_option("baseUrl", project)
         messageUrl = self.get_option("messageUrl", project)
         tokenUrl = self.get_option("tokenUrl", project)
+        keyUrl = self.get_option("keyUrl", project)
         phone = self.get_option("phone", project)
         host = self.get_option("host", project) or ''
+        key = requests.get(
+            baseUrl+keyUrl
+        ).json().get("key")
+        if not key:
+            return u'请检查baseUrl、keyUrl是否设置正确'
         access_token = requests.get(
             baseUrl+tokenUrl,
-            params={"phone": phone}
+            params={"key": key}
         ).json().get("access_token")
         if not access_token:
-            return u'请检查baseUrl、tokenUrl、phone是否设置正确'
+            return u'请检查baseUrl、tokenUrl是否设置正确'
 
         message = {
             "type":"sentry",
