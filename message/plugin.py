@@ -48,8 +48,7 @@ class MessagePlugin(NotificationPlugin):
         return bool(self.get_option('messageUrl', project) and
                     self.get_option('baseUrl', project) and
                     self.get_option('tokenUrl', project) and
-                    self.get_option('keyUrl', project) and
-                    self.get_option('phone', project))
+                    self.get_option('keyUrl', project))
 
     def notify_users(self, group, event, *args, **kwargs):
         if not self.is_configured(group.project):
