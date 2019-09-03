@@ -60,15 +60,16 @@ class MessagePlugin(NotificationPlugin):
         messageUrl = self.get_option("messageUrl", project)
         tokenUrl = self.get_option("tokenUrl", project)
         keyUrl = self.get_option("keyUrl", project)
-        phone = self.get_option("phone", project)
         host = self.get_option("host", project) or ''
         key = requests.get(
-            baseUrl+keyUrl
+            baseUrl+keyUrl,
+            verify=False
         ).json().get("key")
         if not key:
             return u'请检查baseUrl、keyUrl是否设置正确'
         access_token = requests.get(
             baseUrl+tokenUrl,
+            verify=False,
             params={"key": key}
         ).json().get("access_token")
         if not access_token:
@@ -93,4 +94,5 @@ class MessagePlugin(NotificationPlugin):
             baseUrl+messageUrl,
             headers=headers,
             data=json.dumps(message),
+            verify=False,
         )
