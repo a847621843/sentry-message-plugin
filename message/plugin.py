@@ -83,7 +83,7 @@ class MessagePlugin(NotificationPlugin):
                 "level":event.get_tag('level').capitalize(),
                 "time":datetime.now(timezone('Asia/Shanghai')).strftime("%Y-%m-%d %H:%M:%S"),
                 "message":event.message.encode('utf8'),
-                "href":"{}{}events/{}/".format(host, group.get_absolute_url(), event.id)
+                "href":"({}{}events/{}/)".format(host, group.get_absolute_url(), event.id)
             }
 
         }
