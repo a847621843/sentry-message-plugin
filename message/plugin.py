@@ -61,6 +61,8 @@ class MessagePlugin(NotificationPlugin):
         tokenUrl = self.get_option("tokenUrl", project)
         keyUrl = self.get_option("keyUrl", project)
         host = self.get_option("host", project) or ''
+
+
         key = requests.get(
             baseUrl+keyUrl,
             verify=False
