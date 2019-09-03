@@ -6,7 +6,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="sentry-message-plugin",
-    version='2.0',
+    version='2.1',
     author='zhen.huang',
     author_email='huangzhen@xinchanedu.com',
     url='https://github.com/a847621843/sentry-message-plugin',
