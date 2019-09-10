@@ -77,16 +77,13 @@ class MessagePlugin(NotificationPlugin):
             return u'请检查baseUrl、tokenUrl是否设置正确'
 
         message = {
-            "type":"sentry",
-            "sentry":{
                 "type":"text",
                 "projectName":project.slug,
                 "level":event.get_tag('level').capitalize(),
                 "message":event.message.encode('utf8'),
                 "href":"{}{}events/{}/".format(host, group.get_absolute_url(), event.id)
-            }
-
         }
+
         headers = {
             "token":access_token,
         }
